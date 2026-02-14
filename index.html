@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joel Kaunda | Fintech Systems Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --white:#ffffff;--off-white:#fafbfc;--light:#f1f5f9;--light-2:#e8edf3;
+  --text-dark:#0f172a;--text-mid:#334155;--text-light:#64748b;--text-muted:#94a3b8;
+  --blue:#2563eb;--blue-light:#3b82f6;--blue-dark:#1d4ed8;--blue-bg:rgba(37,99,235,0.06);
+  --indigo:#4f46e5;--violet:#7c3aed;
+  --teal:#0d9488;--teal-bg:rgba(13,148,136,0.08);
+  --orange:#ea580c;--orange-bg:rgba(234,88,12,0.08);
+  --rose:#e11d48;--rose-bg:rgba(225,29,72,0.06);
+  --green:#16a34a;--green-bg:rgba(22,163,74,0.08);
+  --gradient-brand:linear-gradient(135deg,#2563eb,#7c3aed);
+  --gradient-warm:linear-gradient(135deg,#ea580c,#e11d48);
+  --gradient-cool:linear-gradient(135deg,#0d9488,#2563eb);
+  --shadow-sm:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg:0 10px 40px rgba(0,0,0,0.1);
+  --shadow-xl:0 20px 60px rgba(0,0,0,0.12);
+  --shadow-blue:0 8px 30px rgba(37,99,235,0.2);
+  --radius:16px;--radius-sm:10px;--radius-xs:6px;
+  --ease:cubic-bezier(0.25,0.46,0.45,0.94);
+}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:'Inter',sans-serif;background:var(--white);color:var(--text-dark);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ===== NAV ===== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;transition:all .4s var(--ease)}
+.nav.scrolled{background:rgba(255,255,255,0.92);backdrop-filter:blur(20px) saturate(1.8);border-bottom:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow-sm)}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:72px;padding:0 2rem}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;background:var(--gradient-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
+.nav-links a{color:rgba(255,255,255,0.85);text-decoration:none;font-size:.9rem;font-weight:500;transition:all .3s;position:relative}
+.nav.scrolled .nav-links a{color:var(--text-mid)}
+.nav-links a:hover{color:white}
+.nav.scrolled .nav-links a:hover{color:var(--blue)}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--gradient-brand);transition:width .3s;border-radius:1px}
+.nav-links a:hover::after{width:100%}
+.nav-cta{padding:.5rem 1.4rem!important;background:var(--gradient-brand)!important;border-radius:8px;color:white!important;-webkit-text-fill-color:white!important;font-weight:600!important;box-shadow:var(--shadow-blue);transition:all .3s!important}
+.nav-cta::after{display:none!important}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 12px 35px rgba(37,99,235,0.3)!important}
+.mobile-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:5px;z-index:1001}
+.mobile-toggle span{width:24px;height:2px;background:white;border-radius:2px;transition:all .3s}
+.nav.scrolled .mobile-toggle span{background:var(--text-dark)}
+
+/* ===== HERO WITH VIDEO ===== */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.hero-video-wrap{position:absolute;inset:0;z-index:0}
+.hero-video-wrap video{width:100%;height:100%;object-fit:cover}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(15,23,42,0.75) 0%,rgba(37,99,235,0.5) 50%,rgba(124,58,237,0.55) 100%);z-index:1}
+.hero-overlay::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,rgba(255,255,255,1) 100%)}
+.hero-content{position:relative;z-index:2;text-align:center;padding:6rem 2rem 8rem;max-width:850px}
+.hero-badge{display:inline-flex;align-items:center;gap:.6rem;padding:.55rem 1.3rem;background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.25);border-radius:50px;font-size:.85rem;color:white;font-weight:500;margin-bottom:2rem;animation:fadeSlideUp .8s var(--ease) forwards;opacity:0}
+.hero-badge .pulse{width:8px;height:8px;background:#22c55e;border-radius:50%;box-shadow:0 0 0 0 rgba(34,197,94,0.5);animation:pulse-ring 2s infinite}
+@keyframes pulse-ring{0%{box-shadow:0 0 0 0 rgba(34,197,94,0.5)}70%{box-shadow:0 0 0 10px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+.hero-name{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,7vw,5.2rem);font-weight:900;line-height:1.08;color:white;margin-bottom:1.2rem;letter-spacing:-2px;animation:fadeSlideUp .8s var(--ease) .15s forwards;opacity:0}
+.hero-name .accent{background:linear-gradient(135deg,#93c5fd,#c4b5fd,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-title{font-size:clamp(1.05rem,2.5vw,1.35rem);color:rgba(255,255,255,0.85);font-weight:400;margin-bottom:1.5rem;animation:fadeSlideUp .8s var(--ease) .3s forwards;opacity:0}
+.hero-desc{font-size:1rem;color:rgba(255,255,255,0.65);max-width:600px;margin:0 auto 2.5rem;animation:fadeSlideUp .8s var(--ease) .45s forwards;opacity:0}
+.hero-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeSlideUp .8s var(--ease) .6s forwards;opacity:0}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.8rem;border-radius:12px;font-size:.95rem;font-weight:600;text-decoration:none;transition:all .3s;cursor:pointer;border:none;font-family:inherit}
+.btn-white{background:white;color:var(--text-dark);box-shadow:var(--shadow-md)}
+.btn-white:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.btn-glass{background:rgba(255,255,255,0.12);backdrop-filter:blur(10px);color:white;border:1px solid rgba(255,255,255,0.25)}
+.btn-glass:hover{background:rgba(255,255,255,0.2);transform:translateY(-2px)}
+.btn-brand{background:var(--gradient-brand);color:white;box-shadow:var(--shadow-blue)}
+.btn-brand:hover{transform:translateY(-2px);box-shadow:0 12px 35px rgba(37,99,235,0.35)}
+.btn-outline-dark{background:transparent;color:var(--text-dark);border:2px solid var(--light-2)}
+.btn-outline-dark:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-2px)}
+
+.hero-stats{display:flex;justify-content:center;gap:3.5rem;margin-top:3.5rem;animation:fadeSlideUp .8s var(--ease) .8s forwards;opacity:0}
+.stat{text-align:center}
+.stat-num{font-size:2.2rem;font-weight:800;color:white;line-height:1.2}
+.stat-label{font-size:.78rem;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:1.5px;font-weight:500}
+
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:.5rem;animation:fadeSlideUp .8s var(--ease) 1s forwards,float-y 3s ease-in-out 2s infinite;opacity:0}
+.scroll-hint .mouse{width:24px;height:36px;border:2px solid rgba(255,255,255,0.4);border-radius:12px;position:relative}
+.scroll-hint .mouse::after{content:'';position:absolute;top:6px;left:50%;transform:translateX(-50%);width:3px;height:8px;background:white;border-radius:2px;animation:scroll-dot 2s infinite}
+.scroll-hint span{font-size:.7rem;color:rgba(255,255,255,0.5);letter-spacing:2px;text-transform:uppercase}
+@keyframes scroll-dot{0%{opacity:1;transform:translateX(-50%) translateY(0)}100%{opacity:0;transform:translateX(-50%) translateY(12px)}}
+@keyframes float-y{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}
+@keyframes fadeSlideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== SECTIONS ===== */
+section{position:relative;padding:6rem 2rem}
+.container{max-width:1200px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:4rem}
+.section-label{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--blue);margin-bottom:.75rem;display:inline-block;padding:.3rem .8rem;background:var(--blue-bg);border-radius:50px}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-1px;color:var(--text-dark);margin-bottom:1rem}
+.section-desc{color:var(--text-light);max-width:550px;margin:0 auto;font-size:1.05rem}
+
+/* ===== ABOUT ===== */
+#about{background:linear-gradient(180deg,#ffffff 0%,#f8faff 100%)}
+.about-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:4rem;align-items:center}
+.about-card{background:var(--white);border:1px solid var(--light-2);border-radius:20px;padding:2.5rem;box-shadow:var(--shadow-md);position:relative;overflow:hidden}
+.about-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gradient-brand)}
+.about-avatar{width:110px;height:110px;border-radius:50%;background:var(--gradient-brand);display:flex;align-items:center;justify-content:center;font-size:2.5rem;font-weight:900;color:white;margin:0 auto 1.5rem;font-family:'Playfair Display',serif;box-shadow:0 8px 25px rgba(37,99,235,0.25);position:relative}
+.about-avatar::after{content:'';position:absolute;inset:-5px;border-radius:50%;border:2px solid rgba(37,99,235,0.2);animation:avatar-ring 3s ease-in-out infinite}
+@keyframes avatar-ring{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.06);opacity:1}}
+.about-info{text-align:center}
+.about-info h3{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--text-dark);margin-bottom:.3rem}
+.about-info .loc{display:flex;align-items:center;justify-content:center;gap:.4rem;color:var(--text-light);font-size:.9rem;margin-bottom:1.5rem}
+.mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.mini-stat{background:var(--off-white);border-radius:var(--radius-sm);padding:.85rem;text-align:center;border:1px solid var(--light-2)}
+.mini-stat .n{font-size:1.6rem;font-weight:800;background:var(--gradient-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2}
+.mini-stat .l{font-size:.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.about-text p{color:var(--text-mid);margin-bottom:1.3rem;font-size:1.02rem}
+.about-text p strong{color:var(--text-dark);font-weight:600}
+.highlights{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-top:2rem}
+.hl{display:flex;align-items:center;gap:.7rem;padding:.85rem 1rem;background:var(--off-white);border-radius:var(--radius-sm);border:1px solid var(--light-2);transition:all .3s var(--ease)}
+.hl:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+.hl-ico{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.hl:nth-child(1) .hl-ico{background:var(--blue-bg);color:var(--blue)}
+.hl:nth-child(2) .hl-ico{background:var(--teal-bg);color:var(--teal)}
+.hl:nth-child(3) .hl-ico{background:var(--orange-bg);color:var(--orange)}
+.hl:nth-child(4) .hl-ico{background:var(--green-bg);color:var(--green)}
+.hl-text{font-size:.85rem;color:var(--text-mid);font-weight:500}
+
+/* ===== SKILLS ===== */
+.skills-section{background:linear-gradient(135deg,#f0f4ff 0%,#faf5ff 50%,#fff1f2 100%);border-top:1px solid var(--light-2);border-bottom:1px solid var(--light-2)}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.5rem}
+.skill-card{background:var(--white);border:1px solid var(--light-2);border-radius:var(--radius);padding:2rem;transition:all .4s var(--ease);position:relative;overflow:hidden}
+.skill-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;transition:height .4s}
+.skill-card:nth-child(1)::before{background:var(--blue)}
+.skill-card:nth-child(2)::before{background:var(--teal)}
+.skill-card:nth-child(3)::before{background:var(--violet)}
+.skill-card:nth-child(4)::before{background:var(--orange)}
+.skill-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:transparent}
+.skill-ico{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.2rem}
+.skill-card:nth-child(1) .skill-ico{background:var(--blue-bg)}
+.skill-card:nth-child(2) .skill-ico{background:var(--teal-bg)}
+.skill-card:nth-child(3) .skill-ico{background:rgba(124,58,237,0.08)}
+.skill-card:nth-child(4) .skill-ico{background:var(--orange-bg)}
+.skill-card h3{font-size:1.1rem;font-weight:700;color:var(--text-dark);margin-bottom:.85rem}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem}
+.tag{padding:.3rem .7rem;background:var(--off-white);border:1px solid var(--light-2);border-radius:var(--radius-xs);font-size:.78rem;color:var(--text-mid);font-weight:500;transition:all .3s}
+.skill-card:hover .tag{border-color:rgba(37,99,235,0.15);color:var(--text-dark)}
+
+/* ===== PROJECTS ===== */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:1.5rem}
+.proj{background:var(--white);border:1px solid var(--light-2);border-radius:var(--radius);overflow:hidden;transition:all .4s var(--ease)}
+.proj:hover{transform:translateY(-8px);box-shadow:var(--shadow-xl);border-color:transparent}
+.proj-preview{height:200px;position:relative;overflow:hidden}
+.proj-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:3.5rem;transition:transform .6s var(--ease)}
+.proj:hover .proj-bg{transform:scale(1.05)}
+.proj:nth-child(1) .proj-bg{background:linear-gradient(135deg,#eff6ff,#dbeafe,#c7d2fe)}
+.proj:nth-child(2) .proj-bg{background:linear-gradient(135deg,#ecfdf5,#d1fae5,#a7f3d0)}
+.proj:nth-child(3) .proj-bg{background:linear-gradient(135deg,#fff7ed,#ffedd5,#fed7aa)}
+.proj:nth-child(4) .proj-bg{background:linear-gradient(135deg,#faf5ff,#f3e8ff,#e9d5ff)}
+.proj:nth-child(5) .proj-bg{background:linear-gradient(135deg,#f0f9ff,#e0f2fe,#bae6fd)}
+.proj:nth-child(6) .proj-bg{background:linear-gradient(135deg,#fef2f2,#fecaca,#fca5a5)}
+.proj-overlay{position:absolute;inset:0;background:rgba(255,255,255,0.85);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;gap:.75rem;opacity:0;transition:all .4s var(--ease)}
+.proj:hover .proj-overlay{opacity:1}
+.proj-badge{position:absolute;top:1rem;right:1rem;padding:.3rem .8rem;border-radius:50px;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.badge-live{background:var(--green-bg);color:var(--green);border:1px solid rgba(22,163,74,0.2)}
+.badge-building{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(37,99,235,0.2)}
+.badge-ready{background:var(--orange-bg);color:var(--orange);border:1px solid rgba(234,88,12,0.2)}
+.proj-body{padding:1.5rem}
+.proj-body h3{font-size:1.12rem;font-weight:700;color:var(--text-dark);margin-bottom:.4rem}
+.proj-body p{color:var(--text-light);font-size:.9rem;margin-bottom:1rem;line-height:1.6}
+.proj-tech{display:flex;flex-wrap:wrap;gap:.35rem}
+.proj-tech span{padding:.2rem .55rem;background:var(--blue-bg);border-radius:4px;font-size:.72rem;color:var(--blue);font-family:'JetBrains Mono',monospace;font-weight:500}
+
+/* ===== TRUSTLAYER SPOTLIGHT ===== */
+.spotlight{background:linear-gradient(135deg,#eef2ff 0%,#f5f3ff 30%,#fdf4ff 60%,#fff7ed 100%);border-top:1px solid var(--light-2);border-bottom:1px solid var(--light-2)}
+.spotlight-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.spotlight-content h3{font-family:'Playfair Display',serif;font-size:2rem;color:var(--text-dark);margin-bottom:1rem}
+.spotlight-content p{color:var(--text-mid);margin-bottom:1.5rem;font-size:1.02rem}
+.golden-circle{display:flex;flex-direction:column;gap:1.25rem}
+.gc-item{display:flex;gap:1rem;padding:1.25rem;background:var(--white);border-radius:var(--radius-sm);border:1px solid var(--light-2);transition:all .3s var(--ease)}
+.gc-item:hover{transform:translateX(6px);box-shadow:var(--shadow-md);border-color:var(--blue)}
+.gc-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;flex-shrink:0;font-family:'Playfair Display',serif;color:white}
+.gc-item:nth-child(1) .gc-icon{background:var(--gradient-brand)}
+.gc-item:nth-child(2) .gc-icon{background:var(--gradient-cool)}
+.gc-item:nth-child(3) .gc-icon{background:var(--gradient-warm)}
+.gc-label{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:.25rem}
+.gc-item:nth-child(1) .gc-label{color:var(--blue)}
+.gc-item:nth-child(2) .gc-label{color:var(--teal)}
+.gc-item:nth-child(3) .gc-label{color:var(--orange)}
+.gc-text{color:var(--text-mid);font-size:.9rem;line-height:1.5}
+.spotlight-visual{display:flex;flex-direction:column;gap:1rem}
+.arch-card{background:var(--white);border:1px solid var(--light-2);border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow-sm)}
+.arch-card h4{font-size:.95rem;font-weight:700;color:var(--text-dark);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.arch-flow{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.flow-step{padding:.4rem .8rem;background:var(--blue-bg);border-radius:var(--radius-xs);font-size:.78rem;color:var(--blue);font-weight:600}
+.flow-arrow{color:var(--text-muted);font-size:.8rem}
+.arch-list{list-style:none;display:flex;flex-direction:column;gap:.4rem}
+.arch-list li{font-size:.85rem;color:var(--text-mid);padding-left:1.2rem;position:relative}
+.arch-list li::before{content:'';position:absolute;left:0;top:10px;width:6px;height:6px;border-radius:50%;background:var(--blue)}
+
+/* ===== EXPERIENCE ===== */
+.exp-section{background:linear-gradient(180deg,#fafbfc 0%,#f0f4ff 100%);border-top:1px solid var(--light-2)}
+.timeline{max-width:800px;margin:0 auto;position:relative}
+.timeline::before{content:'';position:absolute;left:24px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--blue),var(--teal),var(--light-2))}
+.tl-item{padding-left:64px;position:relative;margin-bottom:2.5rem}
+.tl-dot{position:absolute;left:16px;top:8px;width:18px;height:18px;border-radius:50%;border:3px solid var(--blue);background:white;z-index:1}
+.tl-item:first-child .tl-dot{background:var(--blue);box-shadow:0 0 0 5px rgba(37,99,235,0.15)}
+.tl-card{background:var(--white);border:1px solid var(--light-2);border-radius:var(--radius);padding:1.5rem 2rem;transition:all .3s var(--ease);box-shadow:var(--shadow-sm)}
+.tl-card:hover{border-color:var(--blue);transform:translateX(4px);box-shadow:var(--shadow-md)}
+.tl-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:.5rem;flex-wrap:wrap}
+.tl-role{font-size:1.1rem;font-weight:700;color:var(--text-dark)}
+.tl-date{padding:.25rem .7rem;background:var(--blue-bg);border-radius:var(--radius-xs);font-size:.78rem;color:var(--blue);font-weight:600;white-space:nowrap}
+.tl-company{color:var(--teal);font-weight:600;font-size:.92rem;margin-bottom:.25rem}
+.tl-loc{color:var(--text-muted);font-size:.82rem;margin-bottom:.75rem}
+.tl-details{list-style:none;display:flex;flex-direction:column;gap:.4rem}
+.tl-details li{color:var(--text-mid);font-size:.88rem;padding-left:1.2rem;position:relative}
+.tl-details li::before{content:'';position:absolute;left:0;top:10px;width:6px;height:6px;border-radius:50%;background:var(--teal)}
+
+/* ===== CONTACT ===== */
+.contact-section{background:linear-gradient(180deg,#ffffff 0%,#f8f9fc 100%);border-top:1px solid var(--light-2)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;max-width:950px;margin:0 auto}
+.contact-info h3{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--text-dark);margin-bottom:1rem}
+.contact-info>p{color:var(--text-light);margin-bottom:2rem}
+.c-links{display:flex;flex-direction:column;gap:.85rem}
+.c-link{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;background:var(--off-white);border:1px solid var(--light-2);border-radius:var(--radius-sm);text-decoration:none;color:var(--text-dark);transition:all .3s var(--ease)}
+.c-link:hover{border-color:var(--blue);transform:translateX(6px);box-shadow:var(--shadow-sm);background:white}
+.c-link-ico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.c-link:nth-child(1) .c-link-ico{background:var(--blue-bg)}
+.c-link:nth-child(2) .c-link-ico{background:var(--teal-bg)}
+.c-link:nth-child(3) .c-link-ico{background:rgba(124,58,237,0.08)}
+.c-link:nth-child(4) .c-link-ico{background:var(--orange-bg)}
+.c-link-txt .lab{font-size:.72rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.c-link-txt .val{font-weight:600;font-size:.92rem;color:var(--text-dark)}
+.c-form{background:var(--off-white);border:1px solid var(--light-2);border-radius:var(--radius);padding:2rem}
+.c-form h3{font-size:1.2rem;font-weight:700;color:var(--text-dark);margin-bottom:1.5rem}
+.fg{margin-bottom:1rem}
+.fg input,.fg textarea{width:100%;padding:.85rem 1rem;background:white;border:1px solid var(--light-2);border-radius:var(--radius-sm);color:var(--text-dark);font-family:inherit;font-size:.9rem;transition:all .3s;outline:none}
+.fg input:focus,.fg textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,0.08)}
+.fg textarea{min-height:120px;resize:vertical}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--text-muted)}
+.btn-submit{width:100%;justify-content:center}
+
+/* ===== FOOTER ===== */
+.footer{padding:3rem 2rem 2.5rem;text-align:center;background:#0f172a;border-top:none}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem;margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,0.08)}
+.footer-brand{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;background:linear-gradient(135deg,#93c5fd,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.footer-socials{display:flex;gap:.75rem}
+.footer-socials a{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);text-decoration:none;font-size:.95rem;transition:all .3s}
+.footer-socials a:hover{background:rgba(37,99,235,0.2);border-color:rgba(37,99,235,0.3);color:white;transform:translateY(-2px)}
+.footer p{color:rgba(255,255,255,0.4);font-size:.82rem}
+.footer .heart{color:#f43f5e}
+
+/* ===== REVEAL ANIMATIONS ===== */
+.reveal{opacity:0;transform:translateY(40px);transition:all .8s var(--ease)}
+.reveal.active{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:all .8s var(--ease)}
+.reveal-left.active{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(40px);transition:all .8s var(--ease)}
+.reveal-right.active{opacity:1;transform:translateX(0)}
+.reveal-scale{opacity:0;transform:scale(0.92);transition:all .8s var(--ease)}
+.reveal-scale.active{opacity:1;transform:scale(1)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}.d5{transition-delay:.5s}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .nav-links{display:none;position:fixed;inset:0;background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:2rem;z-index:999}
+  .nav-links.open{display:flex}
+  .nav-links a{color:var(--text-dark)!important;font-size:1.2rem}
+  .mobile-toggle{display:flex}
+  .about-grid,.spotlight-grid,.contact-grid{grid-template-columns:1fr}
+  .projects-grid{grid-template-columns:1fr}
+  .hero{min-height:100svh}
+  .hero-stats{gap:1.5rem}
+  .highlights{grid-template-columns:1fr}
+  section{padding:4rem 1.5rem}
+}
+@media(max-width:480px){
+  .hero-stats{flex-direction:column;gap:1rem}
+  .hero-buttons{flex-direction:column;align-items:center}
+  .btn{width:100%;justify-content:center}
+  .mini-stats{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">Joel K.</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about" onclick="closeMenu()">About</a></li>
+      <li><a href="#skills" onclick="closeMenu()">Skills</a></li>
+      <li><a href="#projects" onclick="closeMenu()">Projects</a></li>
+      <li><a href="#trustlayer" onclick="closeMenu()">TrustLayer</a></li>
+      <li><a href="#experience" onclick="closeMenu()">Experience</a></li>
+      <li><a href="#contact" onclick="closeMenu()" class="nav-cta">Hire Me</a></li>
+    </ul>
+    <div class="mobile-toggle" id="mobileToggle" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO WITH VIDEO -->
+<section class="hero" id="hero">
+  <div class="hero-video-wrap">
+    <video autoplay muted loop playsinline id="heroVideo">
+      <source src="https://assets.mixkit.co/videos/41644/41644-1080.mp4" type="video/mp4">
+      <source src="https://assets.mixkit.co/videos/918/918-1080.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="pulse"></span>
+      Open to opportunities
+    </div>
+    <h1 class="hero-name">
+      I'm <span class="accent">Joel Kaunda</span>
+    </h1>
+    <p class="hero-title">
+      Fintech Systems Engineer &bull; Building Trust Infrastructure for Africa
+    </p>
+    <p class="hero-desc">
+      I build production-ready mobile apps, payment systems, and escrow infrastructure.
+      Currently engineering TrustLayer &mdash; solving the KES 10B+ fraud problem in Kenya's high-risk transactions.
+    </p>
+    <div class="hero-buttons">
+      <a href="#projects" class="btn btn-white">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        View My Work
+      </a>
+      <a href="#trustlayer" class="btn btn-glass">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        TrustLayer
+      </a>
+      <a href="#contact" class="btn btn-glass">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        Contact
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num" data-count="6">0</div><div class="stat-label">Projects</div></div>
+      <div class="stat"><div class="stat-num" data-count="5">0</div><div class="stat-label">Live Sites</div></div>
+      <div class="stat"><div class="stat-num" data-count="2">0</div><div class="stat-label">Mobile Apps</div></div>
+      <div class="stat"><div class="stat-num" data-count="10">0</div><div class="stat-label">Technologies</div></div>
+    </div>
+  </div>
+  <div class="scroll-hint"><div class="mouse"></div><span>Scroll</span></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">About Me</div>
+      <h2 class="section-title">Building What Matters</h2>
+      <p class="section-desc">From Nairobi to the world &mdash; engineering solutions for real problems</p>
+    </div>
+    <div class="about-grid">
+      <div class="about-card reveal-left">
+        <div class="about-avatar">JK</div>
+        <div class="about-info">
+          <h3>Joel Kaunda</h3>
+          <div class="loc">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Nairobi, Kenya
+          </div>
+        </div>
+        <div class="mini-stats">
+          <div class="mini-stat"><div class="n">6+</div><div class="l">Projects</div></div>
+          <div class="mini-stat"><div class="n">1+</div><div class="l">Year Exp</div></div>
+          <div class="mini-stat"><div class="n">5+</div><div class="l">Live Sites</div></div>
+          <div class="mini-stat"><div class="n">2</div><div class="l">Mobile Apps</div></div>
+        </div>
+      </div>
+      <div class="about-text reveal-right">
+        <p>
+          I'm a <strong>Fintech Systems Engineer</strong> and <strong>Full-Stack Developer</strong> based in Nairobi.
+          I specialize in <strong>Flutter</strong> for cross-platform mobile apps and <strong>Django/React/Angular</strong>
+          for scalable web systems.
+        </p>
+        <p>
+          My deepest focus is <strong>fintech infrastructure</strong>. I'm building <strong>TrustLayer</strong>,
+          an escrow API designed to inject payment trust into high-risk transactions &mdash; land sales, vehicle
+          purchases, freelance payments &mdash; across Kenya's informal economy.
+        </p>
+        <p>
+          I've shipped production apps in <strong>agriculture, recruitment, education, emergency services, and finance</strong>,
+          each solving a specific business problem with clean architecture and user-first design.
+        </p>
+        <div class="highlights">
+          <div class="hl"><div class="hl-ico">&#9889;</div><div class="hl-text">Production Flutter apps deployed</div></div>
+          <div class="hl"><div class="hl-ico">&#128176;</div><div class="hl-text">M-Pesa payment integrations</div></div>
+          <div class="hl"><div class="hl-ico">&#127757;</div><div class="hl-text">Full-stack web deployments</div></div>
+          <div class="hl"><div class="hl-ico">&#128274;</div><div class="hl-text">Building escrow infrastructure</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="skills-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Tech Stack</div>
+      <h2 class="section-title">Skills & Technologies</h2>
+      <p class="section-desc">The tools I use to bring ideas to production</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-ico">&#128241;</div>
+        <h3>Mobile Development</h3>
+        <div class="tags">
+          <span class="tag">Flutter</span><span class="tag">Dart</span><span class="tag">Firebase Auth</span>
+          <span class="tag">Firestore</span><span class="tag">Cloud Functions</span><span class="tag">Android Studio</span>
+        </div>
+      </div>
+      <div class="skill-card reveal d1">
+        <div class="skill-ico">&#9881;</div>
+        <h3>Backend & APIs</h3>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">Django</span><span class="tag">DRF</span>
+          <span class="tag">PostgreSQL</span><span class="tag">Redis</span><span class="tag">Celery</span><span class="tag">REST APIs</span>
+        </div>
+      </div>
+      <div class="skill-card reveal d2">
+        <div class="skill-ico">&#127912;</div>
+        <h3>Frontend & Web</h3>
+        <div class="tags">
+          <span class="tag">React</span><span class="tag">Next.js</span><span class="tag">Angular</span>
+          <span class="tag">TypeScript</span><span class="tag">Tailwind CSS</span><span class="tag">HTML5/CSS3</span>
+        </div>
+      </div>
+      <div class="skill-card reveal d3">
+        <div class="skill-ico">&#128179;</div>
+        <h3>Payments & DevOps</h3>
+        <div class="tags">
+          <span class="tag">M-Pesa Daraja</span><span class="tag">Pesapal</span><span class="tag">Escrow Systems</span>
+          <span class="tag">Git/GitHub</span><span class="tag">Docker</span><span class="tag">Vercel</span><span class="tag">Linux</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Portfolio</div>
+      <h2 class="section-title">Featured Projects</h2>
+      <p class="section-desc">Real applications solving real problems</p>
+    </div>
+    <div class="projects-grid">
+
+      <div class="proj reveal">
+        <div class="proj-preview">
+          <div class="proj-bg">&#128274;</div>
+          <span class="proj-badge badge-building">Building</span>
+          <div class="proj-overlay">
+            <a href="https://github.com/joel1-stack" target="_blank" class="btn btn-brand">GitHub</a>
+          </div>
+        </div>
+        <div class="proj-body">
+          <h3>TrustLayer &mdash; Escrow API</h3>
+          <p>API-first escrow infrastructure for high-risk transactions in Kenya. Solving KES 10B+ annual fraud in land, vehicle, and freelance payments.</p>
+          <div class="proj-tech"><span>Django</span><span>PostgreSQL</span><span>M-Pesa</span><span>Celery</span><span>Redis</span></div>
+        </div>
+      </div>
+
+      <div class="proj reveal d1">
+        <div class="proj-preview">
+          <div class="proj-bg">&#128200;</div>
+          <span class="proj-badge badge-live">Live</span>
+          <div class="proj-overlay">
+            <a href="https://sacco-sigma.vercel.app" target="_blank" class="btn btn-brand">Live Demo</a>
+            <a href="https://github.com/joel1-stack" target="_blank" class="btn btn-outline-dark">Code</a>
+          </div>
+        </div>
+        <div class="proj-body">
+          <h3>SaccoNova &mdash; Financial System</h3>
+          <p>Modern SACCO management with dashboard analytics, loan processing, account management, and transaction history.</p>
+          <div class="proj-tech"><span>Angular</span><span>TypeScript</span><span>SCSS</span><span>RxJS</span><span>Docker</span></div>
+        </div>
+      </div>
+
+      <div class="proj reveal d2">
+        <div class="proj-preview">
+          <div class="proj-bg">&#9992;&#65039;</div>
+          <span class="proj-badge badge-live">Live</span>
+          <div class="proj-overlay">
+            <a href="https://webtour-blush.vercel.app/" target="_blank" class="btn btn-brand">Live Demo</a>
+          </div>
+        </div>
+        <div class="proj-body">
+          <h3>WebTour &mdash; Travel & Tourism</h3>
+          <p>Modern travel and tourism platform with booking system, tour management, and responsive interface for seamless user experience.</p>
+          <div class="proj-tech"><span>Next.js</span><span>Tailwind CSS</span><span>Vercel</span></div>
+        </div>
+      </div>
+
+      <div class="proj reveal">
+        <div class="proj-preview">
+          <div class="proj-bg">&#128680;</div>
+          <span class="proj-badge badge-ready">APK Ready</span>
+          <div class="proj-overlay">
+            <a href="https://github.com/joel1-stack" target="_blank" class="btn btn-brand">GitHub</a>
+          </div>
+        </div>
+        <div class="proj-body">
+          <h3>Emergency Services App</h3>
+          <p>Cross-platform incident reporting with real-time location tracking, push notifications, and offline-first architecture.</p>
+          <div class="proj-tech"><span>Flutter</span><span>Dart</span><span>Firebase</span><span>Google Maps</span></div>
+        </div>
+      </div>
+
+      <div class="proj reveal d1">
+        <div class="proj-preview">
+          <div class="proj-bg">&#128202;</div>
+          <span class="proj-badge badge-live">Live</span>
+          <div class="proj-overlay">
+            <a href="https://smartweb-xi.vercel.app" target="_blank" class="btn btn-brand">Live Demo</a>
+          </div>
+        </div>
+        <div class="proj-body">
+          <h3>Smart Accountants Dashboard</h3>
+          <p>Financial analytics and client management dashboard with data visualization and reporting features.</p>
+          <div class="proj-tech"><span>React</span><span>Modern UI</span><span>Analytics</span></div>
+        </div>
+      </div>
+
+      <div class="proj reveal d2">
+        <div class="proj-preview">
+          <div class="proj-bg">&#127806;</div>
+          <span class="proj-badge badge-live">Live</span>
+          <div class="proj-overlay">
+            <a href="https://gahi-web.vercel.app" target="_blank" class="btn btn-brand">Live Demo</a>
+            <a href="https://github.com/joel1-stack" target="_blank" class="btn btn-outline-dark">Code</a>
+          </div>
+        </div>
+        <div class="proj-body">
+          <h3>AgriLedger &mdash; Agriculture Platform</h3>
+          <p>Trading platform connecting farmers with buyers. Secure M-Pesa payments, inventory management, and trust mechanisms.</p>
+          <div class="proj-tech"><span>Flutter</span><span>Firebase</span><span>M-Pesa</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TRUSTLAYER SPOTLIGHT (WHY/HOW/WHAT - Golden Circle) -->
+<section id="trustlayer" class="spotlight">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Flagship Project</div>
+      <h2 class="section-title">TrustLayer &mdash; My Flagship Build</h2>
+      <p class="section-desc">I'm engineering the trust layer that Africa's informal economy is missing</p>
+    </div>
+    <div class="spotlight-grid">
+      <div class="spotlight-content reveal-left">
+        <h3>Why I'm Building This</h3>
+        <p>I started TrustLayer because I kept seeing the same problem &mdash; people losing money in transactions where trust doesn't exist. This isn't just a coding project. It's infrastructure I believe East Africa needs.</p>
+        <div class="golden-circle">
+          <div class="gc-item">
+            <div class="gc-icon">W</div>
+            <div>
+              <div class="gc-label">Why I Started</div>
+              <div class="gc-text">I watched people around me lose money on land deals, vehicle purchases, and freelance payments. Kenya loses KES 10B+ annually to this. Buyers fear paying first, sellers fear delivering first. I realized this trust gap is an engineering problem I can solve.</div>
+            </div>
+          </div>
+          <div class="gc-item">
+            <div class="gc-icon">H</div>
+            <div>
+              <div class="gc-label">How I'm Solving It</div>
+              <div class="gc-text">I'm building an API-first escrow layer that any platform can plug into. I've designed it to partner with licensed PSPs to hold funds compliantly &mdash; because in fintech, you need a PSP license to hold money, and I've architected the system around that reality. I've also built automated dispute resolution with evidence-based workflows and vendor trust ratings.</div>
+            </div>
+          </div>
+          <div class="gc-item">
+            <div class="gc-icon">W</div>
+            <div>
+              <div class="gc-label">What I'm Delivering</div>
+              <div class="gc-text">A REST API that lets any marketplace, freelance platform, or e-commerce site add escrow in under 30 minutes. My universal 5-step flow: Deposit &rarr; Hold &rarr; Inspect &rarr; Release/Refund &rarr; Dispute. Simple for developers, safe for users.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="spotlight-visual reveal-right">
+        <div class="arch-card">
+          <h4>&#9881; How I Architected the System</h4>
+          <div class="arch-flow">
+            <span class="flow-step">Client App</span><span class="flow-arrow">&rarr;</span>
+            <span class="flow-step">TrustLayer API</span><span class="flow-arrow">&rarr;</span>
+            <span class="flow-step">Licensed PSP</span><span class="flow-arrow">&rarr;</span>
+            <span class="flow-step">M-Pesa / Bank</span>
+          </div>
+        </div>
+        <div class="arch-card">
+          <h4>&#128274; How I Handle Funds</h4>
+          <ul class="arch-list">
+            <li>I don't hold funds directly &mdash; I partner with a licensed PSP (Payment Service Provider) who manages the escrow wallet under CBK regulation</li>
+            <li>This keeps TrustLayer compliant without needing its own PSP license, and the PSP partnership shapes the entire system architecture</li>
+            <li>TrustLayer orchestrates the full transaction lifecycle via API while the PSP handles the money</li>
+            <li>Revenue model: 1-3% transaction fee split with the PSP partner</li>
+          </ul>
+        </div>
+        <div class="arch-card">
+          <h4>&#9878; How I Resolve Conflicts</h4>
+          <ul class="arch-list">
+            <li>I've designed an evidence upload window &mdash; photos, documents, chat logs &mdash; so both parties can present their case</li>
+            <li>Auto-resolution handles clear-cut cases (delivery tracking confirmations, payment timeouts)</li>
+            <li>Complex disputes escalate to a human mediator with all evidence pre-organized</li>
+            <li>I'm building vendor trust ratings from transaction history &mdash; so repeat honest sellers get verified status and faster payouts</li>
+          </ul>
+        </div>
+        <div class="arch-card">
+          <h4>&#128176; What It Costs End Users</h4>
+          <ul class="arch-list">
+            <li>Buyer pays 1.5% escrow fee on deposit &mdash; a small price for peace of mind</li>
+            <li>Seller receives for free &mdash; this incentivizes adoption on both sides</li>
+            <li>Platform integrators get free API access up to 100 transactions/month</li>
+            <li>Bottom line: it's always cheaper than losing KES 50K+ to fraud</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="exp-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Career</div>
+      <h2 class="section-title">Professional Experience</h2>
+      <p class="section-desc">My journey in software development</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-head">
+            <div class="tl-role">Web/Mobile Developer</div>
+            <div class="tl-date">Jan 2026 - Present</div>
+          </div>
+          <div class="tl-company">Mahad Information Technology</div>
+          <div class="tl-loc">Nairobi, Kenya (Hybrid)</div>
+          <ul class="tl-details">
+            <li>Developing production-grade web and mobile applications with scalable backend architecture</li>
+            <li>Designing and implementing RESTful APIs using Django REST Framework</li>
+            <li>Building cross-platform mobile apps with Flutter and Firebase</li>
+            <li>Integrating payment systems including M-Pesa and Pesapal</li>
+            <li>Deploying applications using CI/CD pipelines and Docker</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item reveal d1">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-head">
+            <div class="tl-role">Freelance Full-Stack Developer</div>
+            <div class="tl-date">Jul 2025 - Feb 2026</div>
+          </div>
+          <div class="tl-company">Self-Employed</div>
+          <div class="tl-loc">Remote</div>
+          <ul class="tl-details">
+            <li>Developed 2 production-ready Flutter mobile apps with Firebase backend</li>
+            <li>Built and deployed responsive web apps using React, Next.js, Angular, and Django</li>
+            <li>Integrated APIs, M-Pesa payments, and optimized for performance/SEO</li>
+            <li>Delivered full-stack solutions for clients in agriculture, finance, and education</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item reveal d2">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-head">
+            <div class="tl-role">Full-Stack Development Trainee</div>
+            <div class="tl-date">May 2025 - Dec 2025</div>
+          </div>
+          <div class="tl-company">Ujuzi Fursa Africa</div>
+          <div class="tl-loc">Nairobi, Kenya</div>
+          <ul class="tl-details">
+            <li>Intensive full-stack program: React, Next.js, Django, Firebase, Supabase</li>
+            <li>Built multiple end-to-end web applications from concept to deployment</li>
+            <li>Practiced Agile workflows, code reviews, and collaborative development</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Contact</div>
+      <h2 class="section-title">Let's Build Together</h2>
+      <p class="section-desc">Open to full-time roles, freelance projects, and collaborations</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal-left">
+        <h3>Get in Touch</h3>
+        <p>I'm actively seeking mobile and full-stack development opportunities in Nairobi. Whether you have a project, a role, or a collaboration idea &mdash; let's talk.</p>
+        <div class="c-links">
+          <a href="mailto:joelkaunda15@gmail.com" class="c-link">
+            <div class="c-link-ico">&#9993;</div>
+            <div class="c-link-txt"><div class="lab">Email</div><div class="val">joelkaunda15@gmail.com</div></div>
+          </a>
+          <a href="tel:+254715641339" class="c-link">
+            <div class="c-link-ico">&#128222;</div>
+            <div class="c-link-txt"><div class="lab">Phone</div><div class="val">+254 715 641 339</div></div>
+          </a>
+          <a href="https://linkedin.com/in/joelkaunda-dev8376" target="_blank" class="c-link">
+            <div class="c-link-ico">&#128188;</div>
+            <div class="c-link-txt"><div class="lab">LinkedIn</div><div class="val">joelkaunda-dev8376</div></div>
+          </a>
+          <a href="https://github.com/joel1-stack" target="_blank" class="c-link">
+            <div class="c-link-ico">&#128187;</div>
+            <div class="c-link-txt"><div class="lab">GitHub</div><div class="val">joel1-stack</div></div>
+          </a>
+        </div>
+      </div>
+      <div class="c-form reveal-right">
+        <h3>Send a Message</h3>
+        <form id="contactForm" onsubmit="handleSubmit(event)">
+          <div class="fg"><input type="text" placeholder="Your Name" required></div>
+          <div class="fg"><input type="email" placeholder="Your Email" required></div>
+          <div class="fg"><input type="text" placeholder="Subject"></div>
+          <div class="fg"><textarea placeholder="Your message..." required></textarea></div>
+          <button type="submit" class="btn btn-brand btn-submit">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+            Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">Joel Kaunda</div>
+      <div class="footer-socials">
+        <a href="mailto:joelkaunda15@gmail.com" title="Email">&#9993;</a>
+        <a href="https://linkedin.com/in/joelkaunda-dev8376" target="_blank" title="LinkedIn">in</a>
+        <a href="https://github.com/joel1-stack" target="_blank" title="GitHub">&#128187;</a>
+        <a href="tel:+254715641339" title="Phone">&#128222;</a>
+      </div>
+    </div>
+    <p>&copy; 2026 Joel Kaunda. Crafted with <span class="heart">&#9829;</span> in Nairobi, Kenya</p>
+  </div>
+</footer>
+
+<script>
+// NAV SCROLL
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50));
+
+// MOBILE MENU
+function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
+function closeMenu() { document.getElementById('navLinks').classList.remove('open'); }
+
+// SCROLL REVEAL
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale').forEach(el => revealObserver.observe(el));
+
+// COUNTER ANIMATION
+const countObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const el = e.target, target = +el.dataset.count;
+      let cur = 0;
+      const inc = target / 50;
+      const timer = setInterval(() => {
+        cur += inc;
+        if (cur >= target) { el.textContent = target + '+'; clearInterval(timer); }
+        else el.textContent = Math.floor(cur);
+      }, 30);
+      countObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.stat-num').forEach(el => countObserver.observe(el));
+
+// SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', function(e) {
+    e.preventDefault();
+    const t = document.querySelector(this.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// FORM
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button');
+  const orig = btn.innerHTML;
+  btn.innerHTML = '<span style="color:#16a34a">&#10003; Message Sent!</span>';
+  btn.style.background = 'rgba(22,163,74,0.08)';
+  btn.style.border = '1px solid rgba(22,163,74,0.2)';
+  setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; btn.style.border = ''; e.target.reset(); }, 3000);
+}
+
+// VIDEO FALLBACK
+const video = document.getElementById('heroVideo');
+video.addEventListener('error', () => {
+  document.querySelector('.hero-overlay').style.background = 'linear-gradient(135deg, rgba(15,23,42,0.88) 0%, rgba(37,99,235,0.65) 50%, rgba(124,58,237,0.7) 100%)';
+});
+// Ensure video plays on mobile
+document.addEventListener('DOMContentLoaded', () => { video.play().catch(() => {}); });
+</script>
+
+</body>
+</html>
